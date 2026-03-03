@@ -400,7 +400,8 @@ function Objectif({athleteId}){
   const [showForm,setShowForm]=useState(false);
   const [form,setForm]=useState({name:"",date:"",distance:"",denivele:"",notes:""});
   const {profile}=useApp();
-  const targetId=athleteId||profile.id;
+  const targetId=athleteId||profile?.id;
+if(!targetId) return null;
   useEffect(()=>{supabase.from("races").select("*").eq("athlete_id",targetId).order("date").then(({data})=>setRaces(data||[]));},[athleteId]);
   async function saveRace(){
     if(!form.name||!form.date) return;
@@ -448,7 +449,8 @@ function Blessures({athleteId}){
   const [showForm,setShowForm]=useState(false);
   const [form,setForm]=useState({zone:"",description:"",date_debut:new Date().toISOString().slice(0,10),statut:"active"});
   const {profile}=useApp();
-  const targetId=athleteId||profile.id;
+  const targetId=athleteId||profile?.id;
+if(!targetId) return null;
   const reload=()=>supabase.from("injuries").select("*").eq("athlete_id",targetId).order("date_debut",{ascending:false}).then(({data})=>setInjuries(data||[]));
   useEffect(()=>{reload();},[athleteId]);
   async function saveInjury(){if(!form.zone||!form.description) return;await supabase.from("injuries").insert({...form,athlete_id:targetId});setForm({zone:"",description:"",date_debut:new Date().toISOString().slice(0,10),statut:"active"});setShowForm(false);reload();}
@@ -524,7 +526,8 @@ function Messagerie({coachId,athleteId,partnerName}){
   const [input,setInput]=useState("");
   const bottomRef=useRef(null);
   const {profile}=useApp();
-  const myId=profile.id;
+  const myId=profile?.id;
+if(!myId) return null;
   const partnerId=profile.role==="coach"?athleteId:coachId;
   useEffect(()=>{
     if(!partnerId) return;
@@ -618,13 +621,13 @@ function AthleteDashboard(){
   const [page,setPage]=useState("planning");
   const [coachProfile,setCoachProfile]=useState(null);
   const {profile}=useApp();
-  useEffect(()=>{if(profile.coach_id) supabase.from("profiles").select("*").eq("id",profile.coach_id).single().then(({data})=>setCoachProfile(data));},[]);
+  useEffect(()=>{if(profile?.coach_id) supabase.from("profiles").select("*").eq("id",profile?.coach_id).single().then(({data})=>setCoachProfile(data));},[]);
   const nav=[{id:"planning",icon:"📅",label:"Mon planning"},{id:"historique",icon:"📋",label:"Historique"},{id:"stats",icon:"📊",label:"Mes stats"},{id:"objectif",icon:"🏆",label:"Mes objectifs"},{id:"blessures",icon:"🩹",label:"Suivi médical"},{id:"messages",icon:"💬",label:"Messages"}];
   return (
     <div className="app-layout">
       <Sidebar nav={nav} active={page} setActive={setPage}/>
       <main className="main">
-        {!profile.coach_id&&<div className="alert alert-warning">⚠️ Pas encore de coach assigné. Vérifie que tu as bien entré le bon code coach à l'inscription.</div>}
+        {!profile?.coach_id&&<div className="alert alert-warning">⚠️ Pas encore de coach assigné. Vérifie que tu as bien entré le bon code coach à l'inscription.</div>}
         {page==="planning"&&<Planning readonly={true}/>}
         {page==="historique"&&<Historique/>}
         {page==="stats"&&<Stats/>}
@@ -646,5 +649,9 @@ export default function App(){
     return ()=>subscription.unsubscribe();
   },[]);
   if(session===undefined) return <><style>{FONTS}{CSS}</style><div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--accent)"}}><div style={{textAlign:"center"}}><div style={{fontSize:56,marginBottom:16}}>⛰️</div><p style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:20,letterSpacing:4,textTransform:"uppercase"}}>TrailCoach</p></div></div></>;
-  return <><style>{FONTS}{CSS}</style>{!session?<AuthPage/>:<AppCtx.Provider value={{session,profile,setProfile}}>{profile?.role==="coach"?<CoachDashboard/>:<AthleteDashboard/>}</AppCtx.Provider>}</>;
+  return <><style>{FONTS}{CSS}</style>{!session?<AuthPage/>:<AppCtx.Provider value={{session,profile,setProfile}}>{!profile ? (
+  <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--accent)"}}>
+    <div className="spinner"/>
+  </div>
+) : profile.role==="coach" ? <CoachDashboard/> : <AthleteDashboard/>}</AppCtx.Provider>}</>;
 }
