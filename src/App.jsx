@@ -765,7 +765,7 @@ export default function App(){
       {!session
         ? <AuthPage/>
         : <AppCtx.Provider value={{session,profile,setProfile}}>
-            {profile?.role==="coach"?<CoachDashboard/>:<AthleteDashboard/>}
+            {profile===null?<div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--muted)"}}>Chargement du profil...</div>:profile?.role==="coach"?<CoachDashboard/>:<AthleteDashboard/>}
           </AppCtx.Provider>
       }
     </>
