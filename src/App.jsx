@@ -646,5 +646,8 @@ export default function App(){
     return ()=>subscription.unsubscribe();
   },[]);
   if(session===undefined) return <><style>{FONTS}{CSS}</style><div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--accent)"}}><div style={{textAlign:"center"}}><div style={{fontSize:56,marginBottom:16}}>⛰️</div><p style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:20,letterSpacing:4,textTransform:"uppercase"}}>TrailCoach</p></div></div></>;
+   if(session===undefined) return <><style>{FONTS}{CSS}</style><div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--accent)"}}><div style={{textAlign:"center"}}><div style={{fontSize:56,marginBottom:16}}>⛰️</div><p style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:20,letterSpacing:4,textTransform:"uppercase"}}>TrailCoach</p></div></div></>;
+
+  if(session && !profile) return <><style>{FONTS}{CSS}</style><div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--accent)"}}><div style={{textAlign:"center"}}><div style={{fontSize:56,marginBottom:16}}>⛰️</div><p style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:20,letterSpacing:4,textTransform:"uppercase"}}>Chargement...</p></div></div></>;
+
   return <><style>{FONTS}{CSS}</style>{!session?<AuthPage/>:<AppCtx.Provider value={{session,profile,setProfile}}>{profile?.role==="coach"?<CoachDashboard/>:<AthleteDashboard/>}</AppCtx.Provider>}</>;
-}
