@@ -31,6 +31,10 @@ html,body,#root{height:100%;background:var(--bg);color:var(--text);font-family:v
 .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:500;color:var(--muted);transition:all .15s;border:none;background:none;width:100%;text-align:left}
 .nav-item:hover{background:var(--bg3);color:var(--text)}
 .nav-item.active{background:rgba(212,255,71,.1);color:var(--accent)}
+.nav-sub{padding-left:16px;display:flex;flex-direction:column;gap:2px;margin-top:2px}
+.nav-sub-item{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);transition:all .15s;border:none;background:none;width:100%;text-align:left}
+.nav-sub-item:hover{background:var(--bg3);color:var(--text)}
+.nav-sub-item.active{background:rgba(212,255,71,.08);color:var(--accent)}
 .sidebar-footer{padding:16px 12px;border-top:1px solid var(--border)}
 .user-chip{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:var(--bg3)}
 .user-chip .avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--bg);flex-shrink:0}
@@ -65,6 +69,24 @@ html,body,#root{height:100%;background:var(--bg);color:var(--text);font-family:v
 .form-textarea{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:var(--font-b);outline:none;resize:vertical;min-height:80px;transition:border-color .15s}
 .form-textarea:focus{border-color:var(--accent)}
 .form-select{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;font-family:var(--font-b);outline:none}
+.month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.month-day-header{font-family:var(--font-h);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);text-align:center;padding:6px 0}
+.month-day-cell{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:8px;min-height:100px;position:relative}
+.month-day-cell.today{border-color:var(--accent)}
+.month-day-cell.other-month{opacity:.35}
+.month-day-cell .day-num{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.month-day-cell.today .day-num{color:var(--accent)}
+.month-session-pill{border-radius:3px;padding:3px 6px;margin-bottom:3px;font-size:10px;cursor:pointer;border-left:2px solid var(--accent);background:rgba(212,255,71,.08)}
+.month-session-pill:hover{background:rgba(212,255,71,.15)}
+.month-session-pill.endurance{border-color:var(--accent2);background:rgba(71,200,255,.08)}
+.month-session-pill.vitesse{border-color:var(--orange);background:rgba(255,140,71,.08)}
+.month-session-pill.recuperation{border-color:var(--muted);background:rgba(107,112,148,.08)}
+.month-session-pill.compet{border-color:var(--red);background:rgba(255,71,71,.08)}
+.month-session-pill .stype{font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:.3px;color:var(--accent)}
+.month-session-pill.endurance .stype{color:var(--accent2)}
+.month-session-pill.vitesse .stype{color:var(--orange)}
+.month-session-pill.recuperation .stype{color:var(--muted)}
+.month-session-pill.compet .stype{color:var(--red)}
 .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
 .day-col{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:12px;min-height:140px;position:relative}
 .day-col .day-label{font-family:var(--font-h);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px}
@@ -138,17 +160,96 @@ html,body,#root{height:100%;background:var(--bg);color:var(--text);font-family:v
 .injury-item{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px}
 .injury-item.active{border-color:var(--red)}
 .injury-item.resolved{border-color:rgba(212,255,71,.2);opacity:.7}
-@media(max-width:768px){.sidebar{display:none}.main{padding:16px}.week-grid{grid-template-columns:repeat(3,1fr)}.stats-grid{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}}
+.chart-bar-wrap{display:flex;flex-direction:column;gap:10px}
+.chart-bar-row{display:flex;align-items:center;gap:10px}
+.chart-bar-label{font-size:11px;color:var(--muted);min-width:56px;text-align:right;flex-shrink:0}
+.chart-bar-track{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.chart-bar-fill{height:100%;border-radius:4px;transition:width .4s ease}
+.chart-bar-val{font-size:12px;font-weight:600;min-width:48px;font-family:var(--font-h)}
+.donut-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.donut-legend{display:flex;flex-direction:column;gap:8px;flex:1;min-width:120px}
+.donut-legend-item{display:flex;align-items:center;gap:8px;font-size:13px}
+.donut-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+@media(max-width:768px){.sidebar{display:none}.main{padding:16px}.week-grid{grid-template-columns:repeat(3,1fr)}.stats-grid{grid-template-columns:1fr 1fr}.grid-2{grid-template-columns:1fr}.month-grid{grid-template-columns:repeat(7,1fr)}.month-day-cell{min-height:60px}}
 `;
 
 const JOURS=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+const MOIS=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
 const TYPES_SESSION=["Endurance","Fractionné","Tempo","Côtes","Récupération","Sortie longue","Compétition","Repos"];
 const TYPE_COLORS={Endurance:"endurance",Fractionné:"vitesse",Tempo:"vitesse",Côtes:"vitesse",Récupération:"recuperation","Sortie longue":"endurance",Compétition:"compet",Repos:"recuperation"};
+const TYPE_PALETTE={Endurance:"#47c8ff",Fractionné:"#ff8c47",Tempo:"#ff6b47",Côtes:"#ffb347",Récupération:"#6b7094","Sortie longue":"#47ffb3",Compétition:"#ff4747",Repos:"#3a3d52"};
 const initials=n=>n?n.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2):"?";
 const formatDate=d=>new Date(d).toLocaleDateString("fr-FR",{day:"numeric",month:"short"});
 const isToday=d=>new Date().toDateString()===d.toDateString();
 function getWeekDates(offset=0){const today=new Date(),mon=new Date(today);mon.setDate(today.getDate()-today.getDay()+1+offset*7);return Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d;});}
 function daysUntil(dateStr){const t=new Date(dateStr),n=new Date();n.setHours(0,0,0,0);t.setHours(0,0,0,0);return Math.ceil((t-n)/(1000*60*60*24));}
+function getMonthDates(year,month){
+  const firstDay=new Date(year,month,1);
+  let startDow=firstDay.getDay();
+  startDow=startDow===0?6:startDow-1;
+  const lastDay=new Date(year,month+1,0);
+  const cells=[];
+  for(let i=0;i<startDow;i++){const d=new Date(year,month,1-(startDow-i));cells.push({date:d,currentMonth:false});}
+  for(let d=1;d<=lastDay.getDate();d++) cells.push({date:new Date(year,month,d),currentMonth:true});
+  while(cells.length%7!==0){const last=cells[cells.length-1].date;const next=new Date(last);next.setDate(last.getDate()+1);cells.push({date:next,currentMonth:false});}
+  return cells;
+}
+
+/* ── DonutChart ──────────────────────────────────────────────── */
+function DonutChart({data}){
+  const total=data.reduce((a,d)=>a+d.value,0);
+  if(!total) return <p className="text-muted">Pas encore de données</p>;
+  let cumAngle=-90;
+  const r=60,cx=80,cy=80;
+  const slices=data.map(d=>{
+    const pct=d.value/total;
+    const angle=pct*360;
+    const start=cumAngle;
+    cumAngle+=angle;
+    const startRad=(start*Math.PI)/180;
+    const endRad=((start+angle)*Math.PI)/180;
+    const x1=cx+r*Math.cos(startRad),y1=cy+r*Math.sin(startRad);
+    const x2=cx+r*Math.cos(endRad),y2=cy+r*Math.sin(endRad);
+    const largeArc=angle>180?1:0;
+    return{...d,path:`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`,pct:Math.round(pct*100)};
+  });
+  return(
+    <div className="donut-wrap">
+      <svg width="160" height="160" style={{flexShrink:0}}>
+        {slices.map((s,i)=><path key={i} d={s.path} fill={s.color} opacity={0.9}><title>{s.label}: {s.value} ({s.pct}%)</title></path>)}
+        <circle cx={cx} cy={cy} r={r-24} fill="var(--bg2)"/>
+        <text x={cx} y={cy-8} textAnchor="middle" fill="var(--accent)" fontFamily="'Barlow Condensed',sans-serif" fontSize="24" fontWeight="700">{total}</text>
+        <text x={cx} y={cy+12} textAnchor="middle" fill="var(--muted)" fontFamily="'Barlow',sans-serif" fontSize="10">séances</text>
+      </svg>
+      <div className="donut-legend">
+        {slices.filter(s=>s.value>0).map((s,i)=>(
+          <div key={i} className="donut-legend-item">
+            <div className="donut-dot" style={{background:s.color}}/>
+            <span style={{flex:1}}>{s.label}</span>
+            <span style={{fontFamily:"var(--font-h)",fontWeight:700,color:s.color}}>{s.pct}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── BarChart ────────────────────────────────────────────────── */
+function BarChart({data,color="var(--accent)",unit="km"}){
+  if(!data.length) return <p className="text-muted">Pas encore de données</p>;
+  const max=Math.max(...data.map(d=>d.value),1);
+  return(
+    <div className="chart-bar-wrap">
+      {data.map((d,i)=>(
+        <div key={i} className="chart-bar-row">
+          <span className="chart-bar-label">{d.label}</span>
+          <div className="chart-bar-track"><div className="chart-bar-fill" style={{width:`${(d.value/max)*100}%`,background:color}}/></div>
+          <span className="chart-bar-val" style={{color}}>{d.value.toFixed(0)}<span style={{fontSize:10,color:"var(--muted)",marginLeft:2}}>{unit}</span></span>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 /* ── Auth ──────────────────────────────────────────────────────── */
 function AuthPage(){
@@ -161,72 +262,73 @@ function AuthPage(){
   const [loading,setLoading]=useState(false);
   const [error,setError]=useState("");
   const [success,setSuccess]=useState("");
-
-  async function handleLogin(e){
-    e.preventDefault();setLoading(true);setError("");
-    const {error}=await supabase.auth.signInWithPassword({email,password});
-    if(error) setError("Email ou mot de passe incorrect.");
-    setLoading(false);
-  }
-
+  async function handleLogin(e){e.preventDefault();setLoading(true);setError("");const{error}=await supabase.auth.signInWithPassword({email,password});if(error) setError("Email ou mot de passe incorrect.");setLoading(false);}
   async function handleRegister(e){
     e.preventDefault();setLoading(true);setError("");setSuccess("");
     let coachId=null;
     if(role==="athlete"){
       if(!coachCode.trim()){setError("Entre le code de ton coach.");setLoading(false);return;}
-      const {data:coach}=await supabase.from("profiles").select("id").eq("coach_code",coachCode.trim().toUpperCase()).single();
-      if(!coach){setError("Code coach introuvable. Demande le code à ton coach.");setLoading(false);return;}
+      const{data:coach}=await supabase.from("profiles").select("id").eq("coach_code",coachCode.trim().toUpperCase()).single();
+      if(!coach){setError("Code coach introuvable.");setLoading(false);return;}
       coachId=coach.id;
     }
-    const {data,error}=await supabase.auth.signUp({email,password});
+    const{data,error}=await supabase.auth.signUp({email,password});
     if(error){setError(error.message);setLoading(false);return;}
     if(data.user){
       const code=role==="coach"?Math.random().toString(36).substring(2,8).toUpperCase():null;
       await supabase.from("profiles").insert({id:data.user.id,email,full_name:name,role,coach_id:coachId,coach_code:code});
-      setSuccess("Compte créé ! Tu peux maintenant te connecter.");
-      setTab("login");
+      setSuccess("Compte créé ! Tu peux maintenant te connecter.");setTab("login");
     }
     setLoading(false);
   }
-
-  return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-logo"><h1>⛰️ TrailCoach</h1><p>Plateforme coach · athlète</p></div>
-        <div className="auth-tabs">
-          <button className={`auth-tab ${tab==="login"?"active":""}`} onClick={()=>setTab("login")}>Connexion</button>
-          <button className={`auth-tab ${tab==="register"?"active":""}`} onClick={()=>setTab("register")}>Inscription</button>
-        </div>
-        {error&&<div className="alert alert-error">{error}</div>}
-        {success&&<div className="alert alert-success">{success}</div>}
-        {tab==="login"?(
-          <form onSubmit={handleLogin}>
-            <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></div>
-            <div className="form-group"><label className="form-label">Mot de passe</label><input className="form-input" type="password" value={password} onChange={e=>setPassword(e.target.value)} required/></div>
-            <button className="btn btn-primary w-full" style={{justifyContent:"center"}} disabled={loading}>{loading?<span className="spinner"/>:"Se connecter"}</button>
-          </form>
-        ):(
-          <form onSubmit={handleRegister}>
-            <div className="form-group"><label className="form-label">Nom complet</label><input className="form-input" value={name} onChange={e=>setName(e.target.value)} required/></div>
-            <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></div>
-            <div className="form-group"><label className="form-label">Mot de passe (6 caractères min)</label><input className="form-input" type="password" value={password} onChange={e=>setPassword(e.target.value)} minLength={6} required/></div>
-            <div className="form-group"><label className="form-label">Je suis</label><select className="form-select" value={role} onChange={e=>setRole(e.target.value)}><option value="athlete">Athlète</option><option value="coach">Coach</option></select></div>
-            {role==="athlete"&&<div className="form-group"><label className="form-label">Code coach</label><input className="form-input" value={coachCode} onChange={e=>setCoachCode(e.target.value)} placeholder="Demande le code à ton coach" required/></div>}
-            <button className="btn btn-primary w-full" style={{justifyContent:"center"}} disabled={loading}>{loading?<span className="spinner"/>:"Créer mon compte"}</button>
-          </form>
-        )}
+  return(
+    <div className="auth-page"><div className="auth-card">
+      <div className="auth-logo"><h1>⛰️ TrailCoach</h1><p>Plateforme coach · athlète</p></div>
+      <div className="auth-tabs">
+        <button className={`auth-tab ${tab==="login"?"active":""}`} onClick={()=>setTab("login")}>Connexion</button>
+        <button className={`auth-tab ${tab==="register"?"active":""}`} onClick={()=>setTab("register")}>Inscription</button>
       </div>
-    </div>
+      {error&&<div className="alert alert-error">{error}</div>}
+      {success&&<div className="alert alert-success">{success}</div>}
+      {tab==="login"?(
+        <form onSubmit={handleLogin}>
+          <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></div>
+          <div className="form-group"><label className="form-label">Mot de passe</label><input className="form-input" type="password" value={password} onChange={e=>setPassword(e.target.value)} required/></div>
+          <button className="btn btn-primary w-full" style={{justifyContent:"center"}} disabled={loading}>{loading?<span className="spinner"/>:"Se connecter"}</button>
+        </form>
+      ):(
+        <form onSubmit={handleRegister}>
+          <div className="form-group"><label className="form-label">Nom complet</label><input className="form-input" value={name} onChange={e=>setName(e.target.value)} required/></div>
+          <div className="form-group"><label className="form-label">Email</label><input className="form-input" type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></div>
+          <div className="form-group"><label className="form-label">Mot de passe (6 caractères min)</label><input className="form-input" type="password" value={password} onChange={e=>setPassword(e.target.value)} minLength={6} required/></div>
+          <div className="form-group"><label className="form-label">Je suis</label><select className="form-select" value={role} onChange={e=>setRole(e.target.value)}><option value="athlete">Athlète</option><option value="coach">Coach</option></select></div>
+          {role==="athlete"&&<div className="form-group"><label className="form-label">Code coach</label><input className="form-input" value={coachCode} onChange={e=>setCoachCode(e.target.value)} placeholder="Demande le code à ton coach" required/></div>}
+          <button className="btn btn-primary w-full" style={{justifyContent:"center"}} disabled={loading}>{loading?<span className="spinner"/>:"Créer mon compte"}</button>
+        </form>
+      )}
+    </div></div>
   );
 }
 
 /* ── Sidebar ─────────────────────────────────────────────────── */
-function Sidebar({nav,active,setActive}){
-  const {profile}=useApp();
-  return (
+function Sidebar({nav,active,setActive,statsSubPage,setStatsSubPage}){
+  const{profile}=useApp();
+  const statsSubs=[{id:"overview",label:"Vue d'ensemble"},{id:"volume",label:"Volume km"},{id:"denivele",label:"Dénivelé"},{id:"typologies",label:"Typologies"}];
+  return(
     <div className="sidebar">
       <div className="sidebar-logo"><h1>⛰️ TrailCoach</h1><p>{profile?.role==="coach"?"Espace Coach":"Espace Athlète"}</p></div>
-      <nav className="sidebar-nav">{nav.map(item=><button key={item.id} className={`nav-item ${active===item.id?"active":""}`} onClick={()=>setActive(item.id)}><span>{item.icon}</span>{item.label}</button>)}</nav>
+      <nav className="sidebar-nav">
+        {nav.map(item=>(
+          <div key={item.id}>
+            <button className={`nav-item ${active===item.id?"active":""}`} onClick={()=>setActive(item.id)}><span>{item.icon}</span>{item.label}</button>
+            {item.id==="stats"&&active==="stats"&&(
+              <div className="nav-sub">
+                {statsSubs.map(sp=><button key={sp.id} className={`nav-sub-item ${statsSubPage===sp.id?"active":""}`} onClick={()=>setStatsSubPage(sp.id)}>· {sp.label}</button>)}
+              </div>
+            )}
+          </div>
+        ))}
+      </nav>
       <div className="sidebar-footer">
         <div className="user-chip"><div className="avatar">{initials(profile?.full_name)}</div><div className="info"><div className="name">{profile?.full_name}</div><div className="role">{profile?.role}</div></div></div>
         <button className="btn btn-secondary btn-sm w-full" style={{justifyContent:"center",marginTop:8}} onClick={()=>supabase.auth.signOut()}>Déconnexion</button>
@@ -237,9 +339,9 @@ function Sidebar({nav,active,setActive}){
 
 /* ── Session Modal ───────────────────────────────────────────── */
 function SessionModal({session,onClose,onSave,athleteId,date}){
-  const [form,setForm]=useState(session||{title:"",type:"Endurance",description:"",distance:"",duration:"",denivele:"",date:date?date.toISOString().slice(0,10):new Date().toISOString().slice(0,10),athlete_id:athleteId||""});
+  const[form,setForm]=useState(session||{title:"",type:"Endurance",description:"",distance:"",duration:"",denivele:"",date:date?date.toISOString().slice(0,10):new Date().toISOString().slice(0,10),athlete_id:athleteId||""});
   const set=(k,v)=>setForm(f=>({...f,[k]:v}));
-  return (
+  return(
     <div className="modal-overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
       <div className="modal">
         <div className="modal-header"><h3>{session?"Modifier séance":"Nouvelle séance"}</h3><button className="modal-close" onClick={onClose}>✕</button></div>
@@ -262,13 +364,13 @@ function SessionModal({session,onClose,onSave,athleteId,date}){
 
 /* ── Feedback Modal ──────────────────────────────────────────── */
 function FeedbackModal({session,onClose,onSave}){
-  const [rpe,setRpe]=useState(session.rpe||5);
-  const [dist,setDist]=useState(session.actual_distance||session.distance||"");
-  const [dur,setDur]=useState(session.actual_duration||session.duration||"");
-  const [comment,setComment]=useState(session.athlete_comment||"");
-  const [done,setDone]=useState(session.completed??true);
+  const[rpe,setRpe]=useState(session.rpe||5);
+  const[dist,setDist]=useState(session.actual_distance||session.distance||"");
+  const[dur,setDur]=useState(session.actual_duration||session.duration||"");
+  const[comment,setComment]=useState(session.athlete_comment||"");
+  const[done,setDone]=useState(session.completed??true);
   const rc=v=>v<=2?"#47ff8a":v<=4?"#d4ff47":v<=6?"#47c8ff":v<=8?"#ff8c47":"#ff4747";
-  return (
+  return(
     <div className="modal-overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
       <div className="modal">
         <div className="modal-header"><h3>Retour séance</h3><button className="modal-close" onClick={onClose}>✕</button></div>
@@ -287,21 +389,94 @@ function FeedbackModal({session,onClose,onSave}){
   );
 }
 
-/* ── Planning ────────────────────────────────────────────────── */
+/* ── Monthly Planning ────────────────────────────────────────── */
+function MonthlyPlanning({athleteId,readonly}){
+  const today=new Date();
+  const[year,setYear]=useState(today.getFullYear());
+  const[month,setMonth]=useState(today.getMonth());
+  const[sessions,setSessions]=useState([]);
+  const[modal,setModal]=useState(null);
+  const[feedbackModal,setFeedbackModal]=useState(null);
+  const{profile}=useApp();
+  const cells=getMonthDates(year,month);
+  useEffect(()=>{fetchSessions();},[year,month,athleteId]);
+  async function fetchSessions(){
+    const from=new Date(year,month,1).toISOString().slice(0,10);
+    const to=new Date(year,month+1,0).toISOString().slice(0,10);
+    let q=supabase.from("sessions").select("*").gte("date",from).lte("date",to).order("date");
+    if(athleteId) q=q.eq("athlete_id",athleteId);
+    else if(profile?.role==="athlete") q=q.eq("athlete_id",profile.id);
+    const{data}=await q;setSessions(data||[]);
+  }
+  async function saveSession(form){if(form.id) await supabase.from("sessions").update(form).eq("id",form.id);else await supabase.from("sessions").insert(form);fetchSessions();}
+  async function saveFeedback(id,fb){await supabase.from("sessions").update(fb).eq("id",id);fetchSessions();}
+  async function deleteSession(id){if(!confirm("Supprimer ?")) return;await supabase.from("sessions").delete().eq("id",id);fetchSessions();}
+  const sfd=d=>sessions.filter(s=>s.date===d.toISOString().slice(0,10));
+  const totalKm=sessions.reduce((a,s)=>a+Number(s.actual_distance||s.distance||0),0);
+  const totalDPlus=sessions.reduce((a,s)=>a+Number(s.denivele||0),0);
+  function prevMonth(){if(month===0){setYear(y=>y-1);setMonth(11);}else setMonth(m=>m-1);}
+  function nextMonth(){if(month===11){setYear(y=>y+1);setMonth(0);}else setMonth(m=>m+1);}
+  return(
+    <div>
+      <div className="flex-between mb-24">
+        <div className="page-header" style={{marginBottom:0}}><h2>📅 Planning</h2><p>{MOIS[month]} {year}</p></div>
+        <div className="flex-gap">
+          <button className="btn btn-secondary btn-sm" onClick={prevMonth}>← Préc.</button>
+          <button className="btn btn-secondary btn-sm" onClick={()=>{setYear(today.getFullYear());setMonth(today.getMonth());}}>Auj.</button>
+          <button className="btn btn-secondary btn-sm" onClick={nextMonth}>Suiv. →</button>
+          {!readonly&&<button className="btn btn-primary btn-sm" onClick={()=>setModal({type:"create"})}>+ Séance</button>}
+        </div>
+      </div>
+      <div className="stats-grid" style={{gridTemplateColumns:"repeat(3,1fr)",marginBottom:20}}>
+        <div className="stat-card accent"><div className="label">Volume mois</div><div className="value">{totalKm.toFixed(0)}<span className="unit">km</span></div></div>
+        <div className="stat-card blue"><div className="label">D+ total</div><div className="value">{(totalDPlus/1000).toFixed(1)}<span className="unit">km D+</span></div></div>
+        <div className="stat-card orange"><div className="label">Séances</div><div className="value">{sessions.filter(s=>s.type!=="Repos").length}</div></div>
+      </div>
+      <div className="month-grid" style={{marginBottom:6}}>
+        {JOURS.map(j=><div key={j} className="month-day-header">{j}</div>)}
+      </div>
+      <div className="month-grid">
+        {cells.map(({date,currentMonth},i)=>{
+          const ds=sfd(date);
+          return(
+            <div key={i} className={`month-day-cell ${isToday(date)?"today":""} ${!currentMonth?"other-month":""}`}>
+              <div className="day-num">{date.getDate()}</div>
+              {ds.map(s=>(
+                <div key={s.id} className={`month-session-pill ${TYPE_COLORS[s.type]||""}`}
+                  onClick={()=>readonly?(profile?.role==="athlete"&&setFeedbackModal(s)):setModal({type:"edit",session:s})}>
+                  <div className="stype">{s.type}</div>
+                  <div style={{fontSize:10,marginTop:1,color:"var(--text)",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{s.title}</div>
+                  {s.distance&&<div style={{fontSize:9,color:"var(--muted)"}}>{s.actual_distance||s.distance}km{s.denivele?` D+${s.denivele}`:""}</div>}
+                  {s.completed!==undefined&&s.completed!==null&&<div style={{fontSize:9,marginTop:1}}>{s.completed?"✅":"⚠️"}{s.rpe?` RPE${s.rpe}`:""}</div>}
+                  {!readonly&&<button style={{position:"absolute",top:2,right:2,background:"none",border:"none",color:"var(--muted)",cursor:"pointer",fontSize:10,lineHeight:1}} onClick={e=>{e.stopPropagation();deleteSession(s.id);}}>✕</button>}
+                </div>
+              ))}
+              {!readonly&&currentMonth&&<button style={{background:"none",border:"1px dashed var(--border)",borderRadius:3,width:"100%",padding:"2px 0",color:"var(--muted)",cursor:"pointer",fontSize:10,marginTop:ds.length?3:0}} onClick={()=>setModal({type:"create",date})}>+</button>}
+            </div>
+          );
+        })}
+      </div>
+      {modal&&<SessionModal session={modal.session} date={modal.date} athleteId={athleteId||(profile?.role==="coach"?null:profile?.id)} onClose={()=>setModal(null)} onSave={saveSession}/>}
+      {feedbackModal&&<FeedbackModal session={feedbackModal} onClose={()=>setFeedbackModal(null)} onSave={fb=>saveFeedback(feedbackModal.id,fb)}/>}
+    </div>
+  );
+}
+
+/* ── Planning semaine (coach) ────────────────────────────────── */
 function Planning({athleteId,readonly}){
-  const [weekOffset,setWeekOffset]=useState(0);
-  const [sessions,setSessions]=useState([]);
-  const [modal,setModal]=useState(null);
-  const [feedbackModal,setFeedbackModal]=useState(null);
-  const {profile}=useApp();
+  const[weekOffset,setWeekOffset]=useState(0);
+  const[sessions,setSessions]=useState([]);
+  const[modal,setModal]=useState(null);
+  const[feedbackModal,setFeedbackModal]=useState(null);
+  const{profile}=useApp();
   const weekDates=getWeekDates(weekOffset);
   useEffect(()=>{fetchSessions();},[weekOffset,athleteId]);
   async function fetchSessions(){
     const from=weekDates[0].toISOString().slice(0,10),to=weekDates[6].toISOString().slice(0,10);
     let q=supabase.from("sessions").select("*").gte("date",from).lte("date",to).order("date");
     if(athleteId) q=q.eq("athlete_id",athleteId);
-    else if(profile.role==="athlete") q=q.eq("athlete_id",profile.id);
-    const {data}=await q; setSessions(data||[]);
+    else if(profile?.role==="athlete") q=q.eq("athlete_id",profile.id);
+    const{data}=await q;setSessions(data||[]);
   }
   async function saveSession(form){if(form.id) await supabase.from("sessions").update(form).eq("id",form.id);else await supabase.from("sessions").insert(form);fetchSessions();}
   async function saveFeedback(id,fb){await supabase.from("sessions").update(fb).eq("id",id);fetchSessions();}
@@ -309,7 +484,7 @@ function Planning({athleteId,readonly}){
   const sfd=date=>sessions.filter(s=>s.date===date.toISOString().slice(0,10));
   const totalKm=sessions.reduce((a,s)=>a+Number(s.actual_distance||s.distance||0),0);
   const totalDPlus=sessions.reduce((a,s)=>a+Number(s.denivele||0),0);
-  return (
+  return(
     <div>
       <div className="flex-between mb-24">
         <div className="page-header" style={{marginBottom:0}}><h2>📅 Planning</h2><p>Sem. du {formatDate(weekDates[0])} au {formatDate(weekDates[6])}</p></div>
@@ -328,11 +503,11 @@ function Planning({athleteId,readonly}){
       <div className="week-grid">
         {weekDates.map((date,i)=>{
           const ds=sfd(date);
-          return (
+          return(
             <div key={i} className={`day-col ${isToday(date)?"today":""}`}>
               <div className="day-label">{JOURS[i]} <span style={{fontWeight:300}}>{date.getDate()}</span></div>
               {ds.map(s=>(
-                <div key={s.id} className={`session-pill ${TYPE_COLORS[s.type]||""}`} onClick={()=>readonly?(profile.role==="athlete"&&setFeedbackModal(s)):setModal({type:"edit",session:s})}>
+                <div key={s.id} className={`session-pill ${TYPE_COLORS[s.type]||""}`} onClick={()=>readonly?(profile?.role==="athlete"&&setFeedbackModal(s)):setModal({type:"edit",session:s})}>
                   <div className="stype">{s.type}</div>
                   <div style={{fontSize:12,marginTop:2}}>{s.title}</div>
                   {s.distance&&<div style={{fontSize:11,color:"var(--muted)",marginTop:2}}>{s.distance}km{s.denivele?` · D+${s.denivele}m`:""}</div>}
@@ -345,7 +520,7 @@ function Planning({athleteId,readonly}){
           );
         })}
       </div>
-      {modal&&<SessionModal session={modal.session} date={modal.date} athleteId={athleteId||(profile.role==="coach"?null:profile.id)} onClose={()=>setModal(null)} onSave={saveSession}/>}
+      {modal&&<SessionModal session={modal.session} date={modal.date} athleteId={athleteId||(profile?.role==="coach"?null:profile?.id)} onClose={()=>setModal(null)} onSave={saveSession}/>}
       {feedbackModal&&<FeedbackModal session={feedbackModal} onClose={()=>setFeedbackModal(null)} onSave={fb=>saveFeedback(feedbackModal.id,fb)}/>}
     </div>
   );
@@ -353,18 +528,18 @@ function Planning({athleteId,readonly}){
 
 /* ── Historique ──────────────────────────────────────────────── */
 function Historique({athleteId}){
-  const [sessions,setSessions]=useState([]);
-  const [selected,setSelected]=useState(null);
-  const {profile}=useApp();
+  const[sessions,setSessions]=useState([]);
+  const[selected,setSelected]=useState(null);
+  const{profile}=useApp();
   useEffect(()=>{
     const today=new Date().toISOString().slice(0,10);
     let q=supabase.from("sessions").select("*").lte("date",today).not("type","eq","Repos").order("date",{ascending:false}).limit(100);
     if(athleteId) q=q.eq("athlete_id",athleteId);
-    else if(profile.role==="athlete") q=q.eq("athlete_id",profile.id);
+    else if(profile?.role==="athlete") q=q.eq("athlete_id",profile.id);
     q.then(({data})=>setSessions(data||[]));
   },[athleteId]);
   const rc=v=>!v?"var(--muted)":v<=2?"#47ff8a":v<=4?"#d4ff47":v<=6?"#47c8ff":v<=8?"#ff8c47":"#ff4747";
-  return (
+  return(
     <div>
       <div className="page-header"><h2>📋 Historique</h2><p>{sessions.length} séances enregistrées</p></div>
       {sessions.length===0?<div className="card" style={{textAlign:"center",padding:40,color:"var(--muted)"}}>Aucune séance passée pour l'instant.</div>:(
@@ -383,9 +558,7 @@ function Historique({athleteId}){
                   {s.rpe&&<span style={{fontFamily:"var(--font-h)",fontSize:18,fontWeight:700,color:rc(s.rpe)}}>RPE {s.rpe}</span>}
                 </div>
               </div>
-              {selected?.id===s.id&&s.athlete_comment&&(
-                <div style={{background:"var(--bg3)",border:"1px solid var(--border)",borderTop:"none",borderRadius:"0 0 10px 10px",padding:"12px 18px",fontSize:13,color:"var(--muted)"}}>💬 {s.athlete_comment}</div>
-              )}
+              {selected?.id===s.id&&s.athlete_comment&&<div style={{background:"var(--bg3)",border:"1px solid var(--border)",borderTop:"none",borderRadius:"0 0 10px 10px",padding:"12px 18px",fontSize:13,color:"var(--muted)"}}>💬 {s.athlete_comment}</div>}
             </div>
           ))}
         </div>
@@ -394,26 +567,21 @@ function Historique({athleteId}){
   );
 }
 
-/* ── Objectif Course ─────────────────────────────────────────── */
+/* ── Objectif ────────────────────────────────────────────────── */
 function Objectif({athleteId}){
-  const [races,setRaces]=useState([]);
-  const [showForm,setShowForm]=useState(false);
-  const [form,setForm]=useState({name:"",date:"",distance:"",denivele:"",notes:""});
-  const {profile}=useApp();
+  const[races,setRaces]=useState([]);
+  const[showForm,setShowForm]=useState(false);
+  const[form,setForm]=useState({name:"",date:"",distance:"",denivele:"",notes:""});
+  const{profile}=useApp();
   const targetId=athleteId||profile?.id;
-if(!targetId) return null;
+  if(!targetId) return null;
   useEffect(()=>{supabase.from("races").select("*").eq("athlete_id",targetId).order("date").then(({data})=>setRaces(data||[]));},[athleteId]);
-  async function saveRace(){
-    if(!form.name||!form.date) return;
-    await supabase.from("races").insert({...form,athlete_id:targetId});
-    setForm({name:"",date:"",distance:"",denivele:"",notes:""});setShowForm(false);
-    supabase.from("races").select("*").eq("athlete_id",targetId).order("date").then(({data})=>setRaces(data||[]));
-  }
+  async function saveRace(){if(!form.name||!form.date) return;await supabase.from("races").insert({...form,athlete_id:targetId});setForm({name:"",date:"",distance:"",denivele:"",notes:""});setShowForm(false);supabase.from("races").select("*").eq("athlete_id",targetId).order("date").then(({data})=>setRaces(data||[]));}
   async function deleteRace(id){if(!confirm("Supprimer ?")) return;await supabase.from("races").delete().eq("id",id);supabase.from("races").select("*").eq("athlete_id",targetId).order("date").then(({data})=>setRaces(data||[]));}
   const upcoming=races.filter(r=>daysUntil(r.date)>=0).sort((a,b)=>new Date(a.date)-new Date(b.date));
   const past=races.filter(r=>daysUntil(r.date)<0);
   const next=upcoming[0];
-  return (
+  return(
     <div>
       <div className="flex-between mb-24"><div className="page-header" style={{marginBottom:0}}><h2>🏆 Objectifs course</h2></div><button className="btn btn-primary btn-sm" onClick={()=>setShowForm(!showForm)}>+ Ajouter</button></div>
       {showForm&&(
@@ -445,12 +613,12 @@ if(!targetId) return null;
 
 /* ── Blessures ───────────────────────────────────────────────── */
 function Blessures({athleteId}){
-  const [injuries,setInjuries]=useState([]);
-  const [showForm,setShowForm]=useState(false);
-  const [form,setForm]=useState({zone:"",description:"",date_debut:new Date().toISOString().slice(0,10),statut:"active"});
-  const {profile}=useApp();
+  const[injuries,setInjuries]=useState([]);
+  const[showForm,setShowForm]=useState(false);
+  const[form,setForm]=useState({zone:"",description:"",date_debut:new Date().toISOString().slice(0,10),statut:"active"});
+  const{profile}=useApp();
   const targetId=athleteId||profile?.id;
-if(!targetId) return null;
+  if(!targetId) return null;
   const reload=()=>supabase.from("injuries").select("*").eq("athlete_id",targetId).order("date_debut",{ascending:false}).then(({data})=>setInjuries(data||[]));
   useEffect(()=>{reload();},[athleteId]);
   async function saveInjury(){if(!form.zone||!form.description) return;await supabase.from("injuries").insert({...form,athlete_id:targetId});setForm({zone:"",description:"",date_debut:new Date().toISOString().slice(0,10),statut:"active"});setShowForm(false);reload();}
@@ -458,7 +626,7 @@ if(!targetId) return null;
   async function del(id){if(!confirm("Supprimer ?")) return;await supabase.from("injuries").delete().eq("id",id);reload();}
   const active=injuries.filter(i=>i.statut==="active");
   const resolved=injuries.filter(i=>i.statut==="resolved");
-  return (
+  return(
     <div>
       <div className="flex-between mb-24"><div className="page-header" style={{marginBottom:0}}><h2>🩹 Suivi médical</h2></div><button className="btn btn-primary btn-sm" onClick={()=>setShowForm(!showForm)}>+ Ajouter</button></div>
       {showForm&&(
@@ -477,34 +645,63 @@ if(!targetId) return null;
   );
 }
 
-/* ── Stats ───────────────────────────────────────────────────── */
-function Stats({athleteId}){
-  const [sessions,setSessions]=useState([]);
-  const [period,setPeriod]=useState("month");
-  const {profile}=useApp();
+/* ── Stats data hook ─────────────────────────────────────────── */
+function useStatsData(period,athleteId){
+  const[sessions,setSessions]=useState([]);
+  const{profile}=useApp();
   useEffect(()=>{
     const now=new Date(),from=new Date(now);
     if(period==="week") from.setDate(now.getDate()-7);
     else if(period==="month") from.setMonth(now.getMonth()-1);
-    else from.setMonth(now.getMonth()-3);
+    else if(period==="3months") from.setMonth(now.getMonth()-3);
+    else from.setFullYear(now.getFullYear()-1);
     let q=supabase.from("sessions").select("*").gte("date",from.toISOString().slice(0,10)).not("type","eq","Repos").order("date");
     if(athleteId) q=q.eq("athlete_id",athleteId);
-    else if(profile.role==="athlete") q=q.eq("athlete_id",profile.id);
+    else if(profile?.role==="athlete") q=q.eq("athlete_id",profile.id);
     q.then(({data})=>setSessions(data||[]));
   },[period,athleteId]);
+  return sessions;
+}
+function buildWeekly(sessions,field){
+  const map={};
+  sessions.forEach(s=>{
+    const d=new Date(s.date),m=new Date(d);
+    m.setDate(d.getDate()-((d.getDay()+6)%7));
+    const k=m.toISOString().slice(0,10);
+    const val=field==="distance"?Number(s.actual_distance||s.distance||0):Number(s.denivele||0);
+    map[k]=(map[k]||0)+val;
+  });
+  return Object.entries(map).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>({label:new Date(k).toLocaleDateString("fr-FR",{day:"numeric",month:"short"}),value:v}));
+}
+function buildMonthly(sessions,field){
+  const map={};
+  sessions.forEach(s=>{
+    const d=new Date(s.date);
+    const k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+    const val=field==="distance"?Number(s.actual_distance||s.distance||0):Number(s.denivele||0);
+    map[k]=(map[k]||0)+val;
+  });
+  return Object.entries(map).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>({label:MOIS[parseInt(k.split("-")[1])-1].slice(0,4)+" "+k.split("-")[0].slice(2),value:v}));
+}
+
+/* ── StatsOverview ───────────────────────────────────────────── */
+function StatsOverview({athleteId}){
+  const[period,setPeriod]=useState("month");
+  const sessions=useStatsData(period,athleteId);
   const totalKm=sessions.reduce((a,s)=>a+Number(s.actual_distance||s.distance||0),0);
   const totalDPlus=sessions.reduce((a,s)=>a+Number(s.denivele||0),0);
   const totalMin=sessions.reduce((a,s)=>a+Number(s.actual_duration||s.duration||0),0);
   const avgRpe=sessions.filter(s=>s.rpe).reduce((a,s,_,arr)=>a+s.rpe/arr.length,0);
   const completed=sessions.filter(s=>s.completed===true).length;
   const compliance=sessions.length?Math.round(completed/sessions.length*100):0;
-  const weeklyKm={};
-  sessions.forEach(s=>{const d=new Date(s.date),m=new Date(d);m.setDate(d.getDate()-d.getDay()+1);const k=m.toISOString().slice(0,10);weeklyKm[k]=(weeklyKm[k]||0)+Number(s.actual_distance||s.distance||0);});
-  const weeklyData=Object.entries(weeklyKm).sort(([a],[b])=>a.localeCompare(b));
-  const typeDistrib={};sessions.forEach(s=>{typeDistrib[s.type]=(typeDistrib[s.type]||0)+1;});
-  return (
+  return(
     <div>
-      <div className="flex-between mb-24"><div className="page-header" style={{marginBottom:0}}><h2>📊 Statistiques</h2></div><div className="flex-gap">{["week","month","3months"].map(p=><button key={p} className={`btn btn-sm ${period===p?"btn-primary":"btn-secondary"}`} onClick={()=>setPeriod(p)}>{p==="week"?"7j":p==="month"?"30j":"3 mois"}</button>)}</div></div>
+      <div className="flex-between mb-24">
+        <div className="page-header" style={{marginBottom:0}}><h2>📊 Vue d'ensemble</h2></div>
+        <div className="flex-gap">
+          {["week","month","3months","year"].map(p=><button key={p} className={`btn btn-sm ${period===p?"btn-primary":"btn-secondary"}`} onClick={()=>setPeriod(p)}>{p==="week"?"7j":p==="month"?"30j":p==="3months"?"3 mois":"1 an"}</button>)}
+        </div>
+      </div>
       <div className="stats-grid">
         <div className="stat-card accent"><div className="label">Volume total</div><div className="value">{totalKm.toFixed(0)}<span className="unit">km</span></div><div className="delta">{sessions.length} séances</div></div>
         <div className="stat-card blue"><div className="label">D+ total</div><div className="value">{(totalDPlus/1000).toFixed(1)}<span className="unit">km D+</span></div></div>
@@ -512,9 +709,86 @@ function Stats({athleteId}){
         <div className="stat-card"><div className="label">RPE moyen</div><div className="value" style={{color:avgRpe>7?"var(--red)":avgRpe>5?"var(--orange)":"var(--accent)"}}>{avgRpe?avgRpe.toFixed(1):"—"}<span className="unit">/10</span></div></div>
         <div className="stat-card"><div className="label">Compliance</div><div className="value" style={{color:compliance>=80?"var(--accent)":compliance>=60?"var(--orange)":"var(--red)"}}>{compliance}<span className="unit">%</span></div><div className="delta">{completed}/{sessions.length} réalisées</div></div>
       </div>
-      <div className="grid-2 mt-24">
-        <div className="card"><div className="section-title">Volume hebdo (km)</div>{weeklyData.length===0?<p className="text-muted">Pas encore de données</p>:weeklyData.map(([week,km])=>{const max=Math.max(...weeklyData.map(([,k])=>k));return(<div key={week} style={{marginBottom:10}}><div className="flex-between" style={{marginBottom:4}}><span style={{fontSize:12,color:"var(--muted)"}}>{formatDate(week)}</span><span style={{fontSize:13,fontWeight:600,color:"var(--accent)",fontFamily:"var(--font-h)"}}>{km.toFixed(0)} km</span></div><div style={{height:6,background:"var(--bg3)",borderRadius:3,overflow:"hidden"}}><div style={{width:`${max?km/max*100:0}%`,height:"100%",background:"var(--accent)",borderRadius:3,transition:"width .3s"}}/></div></div>);})}</div>
-        <div className="card"><div className="section-title">Répartition types</div>{Object.keys(typeDistrib).length===0?<p className="text-muted">Pas encore de données</p>:Object.entries(typeDistrib).sort((a,b)=>b[1]-a[1]).map(([type,count])=>{const pct=sessions.length?count/sessions.length*100:0;return(<div key={type} style={{marginBottom:10}}><div className="flex-between" style={{marginBottom:4}}><span style={{fontSize:13}}>{type}</span><span style={{fontSize:12,color:"var(--muted)"}}>{count} · {pct.toFixed(0)}%</span></div><div style={{height:6,background:"var(--bg3)",borderRadius:3,overflow:"hidden"}}><div style={{width:`${pct}%`,height:"100%",background:"var(--accent2)",borderRadius:3}}/></div></div>);})}</div>
+    </div>
+  );
+}
+
+/* ── StatsVolume ─────────────────────────────────────────────── */
+function StatsVolume({athleteId}){
+  const[period,setPeriod]=useState("3months");
+  const[gran,setGran]=useState("semaine");
+  const sessions=useStatsData(period,athleteId);
+  const data=gran==="semaine"?buildWeekly(sessions,"distance"):buildMonthly(sessions,"distance");
+  return(
+    <div>
+      <div className="flex-between mb-24">
+        <div className="page-header" style={{marginBottom:0}}><h2>📈 Volume (km)</h2></div>
+        <div className="flex-gap">
+          {["month","3months","year"].map(p=><button key={p} className={`btn btn-sm ${period===p?"btn-primary":"btn-secondary"}`} onClick={()=>setPeriod(p)}>{p==="month"?"3 mois":p==="3months"?"6 mois":"1 an"}</button>)}
+        </div>
+      </div>
+      <div className="card">
+        <div className="flex-between mb-16">
+          <div className="section-title" style={{marginBottom:0}}>Évolution du volume</div>
+          <div className="flex-gap">
+            {["semaine","mois"].map(g=><button key={g} className={`btn btn-sm ${gran===g?"btn-primary":"btn-secondary"}`} onClick={()=>setGran(g)}>Par {g}</button>)}
+          </div>
+        </div>
+        <BarChart data={data} color="var(--accent)" unit="km"/>
+      </div>
+    </div>
+  );
+}
+
+/* ── StatsDenivele ───────────────────────────────────────────── */
+function StatsDenivele({athleteId}){
+  const[period,setPeriod]=useState("3months");
+  const[gran,setGran]=useState("semaine");
+  const sessions=useStatsData(period,athleteId);
+  const data=(gran==="semaine"?buildWeekly(sessions,"denivele"):buildMonthly(sessions,"denivele")).map(d=>({...d,value:Math.round(d.value)}));
+  return(
+    <div>
+      <div className="flex-between mb-24">
+        <div className="page-header" style={{marginBottom:0}}><h2>⛰️ Dénivelé</h2></div>
+        <div className="flex-gap">
+          {["month","3months","year"].map(p=><button key={p} className={`btn btn-sm ${period===p?"btn-primary":"btn-secondary"}`} onClick={()=>setPeriod(p)}>{p==="month"?"3 mois":p==="3months"?"6 mois":"1 an"}</button>)}
+        </div>
+      </div>
+      <div className="card">
+        <div className="flex-between mb-16">
+          <div className="section-title" style={{marginBottom:0}}>Évolution du D+</div>
+          <div className="flex-gap">
+            {["semaine","mois"].map(g=><button key={g} className={`btn btn-sm ${gran===g?"btn-primary":"btn-secondary"}`} onClick={()=>setGran(g)}>Par {g}</button>)}
+          </div>
+        </div>
+        <BarChart data={data} color="var(--accent2)" unit="m"/>
+      </div>
+    </div>
+  );
+}
+
+/* ── StatsTypologies ─────────────────────────────────────────── */
+function StatsTypologies({athleteId}){
+  const[period,setPeriod]=useState("month");
+  const sessions=useStatsData(period,athleteId);
+  const typeDistrib={};
+  sessions.forEach(s=>{typeDistrib[s.type]=(typeDistrib[s.type]||0)+1;});
+  const donutData=Object.entries(typeDistrib).map(([label,value])=>({label,value,color:TYPE_PALETTE[label]||"#6b7094"})).sort((a,b)=>b.value-a.value);
+  return(
+    <div>
+      <div className="flex-between mb-24">
+        <div className="page-header" style={{marginBottom:0}}><h2>🥧 Typologies</h2></div>
+        <div className="flex-gap">
+          {["week","month","3months","year"].map(p=><button key={p} className={`btn btn-sm ${period===p?"btn-primary":"btn-secondary"}`} onClick={()=>setPeriod(p)}>{p==="week"?"7j":p==="month"?"30j":p==="3months"?"3 mois":"1 an"}</button>)}
+        </div>
+      </div>
+      <div className="card mb-24">
+        <div className="section-title">Répartition des séances</div>
+        <DonutChart data={donutData}/>
+      </div>
+      <div className="card">
+        <div className="section-title">Détail par type</div>
+        <BarChart data={donutData.map(d=>({label:d.label.slice(0,9),value:d.value}))} color="var(--orange)" unit="×"/>
       </div>
     </div>
   );
@@ -522,12 +796,12 @@ function Stats({athleteId}){
 
 /* ── Messagerie ──────────────────────────────────────────────── */
 function Messagerie({coachId,athleteId,partnerName}){
-  const [messages,setMessages]=useState([]);
-  const [input,setInput]=useState("");
+  const[messages,setMessages]=useState([]);
+  const[input,setInput]=useState("");
   const bottomRef=useRef(null);
-  const {profile}=useApp();
+  const{profile}=useApp();
   const myId=profile?.id;
-if(!myId) return null;
+  if(!myId) return null;
   const partnerId=profile.role==="coach"?athleteId:coachId;
   useEffect(()=>{
     if(!partnerId) return;
@@ -538,7 +812,7 @@ if(!myId) return null;
   useEffect(()=>{bottomRef.current?.scrollIntoView({behavior:"smooth"});},[messages]);
   async function send(){if(!input.trim()||!partnerId) return;await supabase.from("messages").insert({sender_id:myId,receiver_id:partnerId,content:input.trim()});setInput("");}
   if(!partnerId) return <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"300px",color:"var(--muted)"}}>Sélectionne un athlète</div>;
-  return (
+  return(
     <div className="messages-wrap">
       <div style={{padding:"12px 16px",borderBottom:"1px solid var(--border)",display:"flex",alignItems:"center",gap:10}}>
         <div style={{width:36,height:36,borderRadius:"50%",background:"var(--bg3)",border:"1px solid var(--border)",display:"flex",alignItems:"center",justifyContent:"center",fontWeight:700}}>{initials(partnerName)}</div>
@@ -556,16 +830,17 @@ if(!myId) return null;
 
 /* ── Coach Dashboard ─────────────────────────────────────────── */
 function CoachDashboard(){
-  const [page,setPage]=useState("athletes");
-  const [athletes,setAthletes]=useState([]);
-  const [sel,setSel]=useState(null);
-  const {profile}=useApp();
+  const[page,setPage]=useState("athletes");
+  const[athletes,setAthletes]=useState([]);
+  const[sel,setSel]=useState(null);
+  const[statsSubPage,setStatsSubPage]=useState("overview");
+  const{profile}=useApp();
   useEffect(()=>{supabase.from("profiles").select("*").eq("role","athlete").eq("coach_id",profile.id).then(({data})=>setAthletes(data||[]));},[]);
   const nav=[{id:"athletes",icon:"👥",label:"Mes athlètes"},{id:"planning",icon:"📅",label:"Planning"},{id:"stats",icon:"📊",label:"Statistiques"},{id:"historique",icon:"📋",label:"Historique"},{id:"objectif",icon:"🏆",label:"Objectifs"},{id:"blessures",icon:"🩹",label:"Suivi médical"},{id:"messages",icon:"💬",label:"Messages"}];
   const back=()=><div className="flex-gap mb-16"><button className="btn btn-secondary btn-sm" onClick={()=>{setPage("athletes");setSel(null);}}>← Retour</button><span style={{fontWeight:600}}>{sel?.full_name}</span></div>;
-  return (
+  return(
     <div className="app-layout">
-      <Sidebar nav={nav} active={page} setActive={setPage}/>
+      <Sidebar nav={nav} active={page} setActive={setPage} statsSubPage={statsSubPage} setStatsSubPage={setStatsSubPage}/>
       <main className="main">
         {page==="athletes"&&(
           <div>
@@ -598,7 +873,12 @@ function CoachDashboard(){
           </div>
         )}
         {page==="planning"&&<div>{sel&&back()}<Planning athleteId={sel?.id} readonly={false}/></div>}
-        {page==="stats"&&<div>{sel&&back()}<Stats athleteId={sel?.id}/></div>}
+        {page==="stats"&&<div>{sel&&back()}
+          {statsSubPage==="overview"&&<StatsOverview athleteId={sel?.id}/>}
+          {statsSubPage==="volume"&&<StatsVolume athleteId={sel?.id}/>}
+          {statsSubPage==="denivele"&&<StatsDenivele athleteId={sel?.id}/>}
+          {statsSubPage==="typologies"&&<StatsTypologies athleteId={sel?.id}/>}
+        </div>}
         {page==="historique"&&<div>{sel&&back()}<Historique athleteId={sel?.id}/></div>}
         {page==="objectif"&&<div>{sel&&back()}<Objectif athleteId={sel?.id}/></div>}
         {page==="blessures"&&<div>{sel&&back()}<Blessures athleteId={sel?.id}/></div>}
@@ -618,19 +898,27 @@ function CoachDashboard(){
 
 /* ── Athlete Dashboard ───────────────────────────────────────── */
 function AthleteDashboard(){
-  const [page,setPage]=useState("planning");
-  const [coachProfile,setCoachProfile]=useState(null);
-  const {profile}=useApp();
+  const[page,setPage]=useState("planning");
+  const[statsSubPage,setStatsSubPage]=useState("overview");
+  const[coachProfile,setCoachProfile]=useState(null);
+  const{profile}=useApp();
   useEffect(()=>{if(profile?.coach_id) supabase.from("profiles").select("*").eq("id",profile?.coach_id).single().then(({data})=>setCoachProfile(data));},[]);
   const nav=[{id:"planning",icon:"📅",label:"Mon planning"},{id:"historique",icon:"📋",label:"Historique"},{id:"stats",icon:"📊",label:"Mes stats"},{id:"objectif",icon:"🏆",label:"Mes objectifs"},{id:"blessures",icon:"🩹",label:"Suivi médical"},{id:"messages",icon:"💬",label:"Messages"}];
-  return (
+  return(
     <div className="app-layout">
-      <Sidebar nav={nav} active={page} setActive={setPage}/>
+      <Sidebar nav={nav} active={page} setActive={setPage} statsSubPage={statsSubPage} setStatsSubPage={setStatsSubPage}/>
       <main className="main">
         {!profile?.coach_id&&<div className="alert alert-warning">⚠️ Pas encore de coach assigné. Vérifie que tu as bien entré le bon code coach à l'inscription.</div>}
-        {page==="planning"&&<Planning readonly={true}/>}
+        {page==="planning"&&<MonthlyPlanning readonly={true}/>}
         {page==="historique"&&<Historique/>}
-        {page==="stats"&&<Stats/>}
+        {page==="stats"&&(
+          <div>
+            {statsSubPage==="overview"&&<StatsOverview/>}
+            {statsSubPage==="volume"&&<StatsVolume/>}
+            {statsSubPage==="denivele"&&<StatsDenivele/>}
+            {statsSubPage==="typologies"&&<StatsTypologies/>}
+          </div>
+        )}
         {page==="objectif"&&<Objectif/>}
         {page==="blessures"&&<Blessures/>}
         {page==="messages"&&<div><div className="page-header"><h2>💬 Messages</h2>{coachProfile&&<p>Conversation avec {coachProfile.full_name}</p>}</div><div className="card" style={{padding:0,overflow:"hidden"}}><Messagerie coachId={profile.coach_id} partnerName={coachProfile?.full_name}/></div></div>}
@@ -641,17 +929,13 @@ function AthleteDashboard(){
 
 /* ── Root ────────────────────────────────────────────────────── */
 export default function App(){
-  const [session,setSession]=useState(undefined);
-  const [profile,setProfile]=useState(null);
+  const[session,setSession]=useState(undefined);
+  const[profile,setProfile]=useState(null);
   useEffect(()=>{
     supabase.auth.getSession().then(({data:{session}})=>{setSession(session);if(session) supabase.from("profiles").select("*").eq("id",session.user.id).single().then(({data})=>setProfile(data));});
-    const {data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>{setSession(s);if(s) supabase.from("profiles").select("*").eq("id",s.user.id).single().then(({data})=>setProfile(data));else setProfile(null);});
+    const{data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>{setSession(s);if(s) supabase.from("profiles").select("*").eq("id",s.user.id).single().then(({data})=>setProfile(data));else setProfile(null);});
     return ()=>subscription.unsubscribe();
   },[]);
   if(session===undefined) return <><style>{FONTS}{CSS}</style><div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--accent)"}}><div style={{textAlign:"center"}}><div style={{fontSize:56,marginBottom:16}}>⛰️</div><p style={{fontFamily:"'Barlow Condensed',sans-serif",fontSize:20,letterSpacing:4,textTransform:"uppercase"}}>TrailCoach</p></div></div></>;
-  return <><style>{FONTS}{CSS}</style>{!session?<AuthPage/>:<AppCtx.Provider value={{session,profile,setProfile}}>{!profile ? (
-  <div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--accent)"}}>
-    <div className="spinner"/>
-  </div>
-) : profile.role==="coach" ? <CoachDashboard/> : <AthleteDashboard/>}</AppCtx.Provider>}</>;
+  return <><style>{FONTS}{CSS}</style>{!session?<AuthPage/>:<AppCtx.Provider value={{session,profile,setProfile}}>{!profile?(<div style={{display:"flex",alignItems:"center",justifyContent:"center",height:"100vh",background:"var(--bg)",color:"var(--accent)"}}><div className="spinner"/></div>):profile.role==="coach"?<CoachDashboard/>:<AthleteDashboard/>}</AppCtx.Provider>}</>;
 }
